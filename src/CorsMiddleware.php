@@ -42,7 +42,8 @@ class CorsMiddleware extends BraceAbstractMiddleware
                 }
             }
         }
-        $response = $response->withAddedHeader("Access-Control-Allow-Headers", "Content-Type, origin, accept");
+        $response = $response->withAddedHeader("Access-Control-Allow-Headers", "Content-Type, origin, accept, Cookie");
+        $response = $response->withAddedHeader("Access-Control-Allow-Credentials", 'true');
         $response = $response->withAddedHeader("Access-Control-Max-Age", 0);
         return $response;
     }
