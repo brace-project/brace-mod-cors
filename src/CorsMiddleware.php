@@ -32,19 +32,29 @@ class CorsMiddleware extends BraceAbstractMiddleware
             out($response);
         }
 
+        $headersToSet = [
+            "Access-Control-Allow-Headers" => "Content-Type, origin, accept, Cookie",
+            "Access-Control-Allow-Credentials" => 'true',
+            "Access-Control-Max-Age" => 0
+        ];
+
+
         if ($origin !== "") {
             if ($this->allowOrigins !== null) {
                 if (isset ($this->allowOrigins[$origin]) || in_array("*", $this->allowOrigins)) {
-                    $response = $response->withAddedHeader("Access-Control-Allow-Origin", $origin);
+                    if ( ! $response->hasHeader("Access-Control-Allow-Origin"))
+                        $response = $response->withAddedHeader("Access-Control-Allow-Origin", $origin);
                     foreach ($this->allowOrigins[$origin] ?? [] as $key => $value) {
-                          $response = $response->withAddedHeader($key, $value);
+                        $response = $response->withAddedHeader($key, $value);
                     }
                 }
             }
         }
-        $response = $response->withAddedHeader("Access-Control-Allow-Headers", "Content-Type, origin, accept, Cookie");
-        $response = $response->withAddedHeader("Access-Control-Allow-Credentials", 'true');
-        $response = $response->withAddedHeader("Access-Control-Max-Age", 0);
+
+        foreach ($headersToSet as $key => $value)
+            if ( ! $response->hasHeader($key))
+                $response = $response->withAddedHeader($key, $value);
+
         return $response;
     }
 }
