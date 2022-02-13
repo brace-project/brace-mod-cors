@@ -49,6 +49,15 @@ class CorsMiddleware extends BraceAbstractMiddleware
                     }
                 }
             }
+            if ($this->validator !== null) {
+                if (phore_di_call($this->validator, $this->app, ["origin" => $origin]) == true) {
+                    if ( ! $response->hasHeader("Access-Control-Allow-Origin"))
+                        $response = $response->withAddedHeader("Access-Control-Allow-Origin", $origin);
+                    foreach ($this->allowOrigins[$origin] ?? [] as $key => $value) {
+                        $response = $response->withAddedHeader($key, $value);
+                    }
+                }
+            }
         }
 
         foreach ($headersToSet as $key => $value)
