@@ -24,6 +24,7 @@
             "Brace\\CORS\\": "src"
         },
         "files": [
+            "src/functions.php"
         ]
     },
     "autoload-dev": {
