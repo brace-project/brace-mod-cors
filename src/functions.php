@@ -21,7 +21,7 @@ function origin_match (string $needle, array|string $allowedOrigins) : bool
         $allowedOrigin = parse_url($allowedOrigin);
         if ($allowedOrigin === false)
             continue;
-        if ($needle[PHP_URL_SCHEME] === $allowedOrigin[PHP_URL_SCHEME] && $needle[PHP_URL_HOST] === $allowedOrigin[PHP_URL_HOST])
+        if (($needle[PHP_URL_SCHEME] ?? "") === ($allowedOrigin[PHP_URL_SCHEME] ?? "") && ($needle[PHP_URL_HOST] ?? "") === ($allowedOrigin[PHP_URL_HOST] ?? ""))
             return true;
     }
     return false;
