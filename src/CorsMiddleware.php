@@ -31,7 +31,7 @@ class CorsMiddleware extends BraceAbstractMiddleware
         $headersToSet = [
             "Access-Control-Allow-Headers" => "Content-Type, origin, accept, Cookie",
             "Access-Control-Allow-Credentials" => 'true',
-            "Access-Control-Max-Age" => 0
+            "Access-Control-Max-Age" => 300
         ];
         
         if ($origin !== "") {
